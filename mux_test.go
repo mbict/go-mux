@@ -62,7 +62,7 @@ func TestMux(t *testing.T) {
 }
 
 func TestMuxPanicDuplicatePath(t *testing.T) {
-	expected := "mux: duplicate path for /test"
+	expected := "mux: duplicate path for `/test`"
 	defer func() {
 		r := recover()
 		if r == nil {

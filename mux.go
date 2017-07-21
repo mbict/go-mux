@@ -30,8 +30,8 @@ func (mux *Mux) Handle(pattern string, h http.Handler) {
 	if h == nil {
 		panic("mux: nil handler")
 	}
-	if _, p := mux.matchRoute(pattern); p == pattern {
-		panic("mux: duplicate path for " + pattern)
+	if h, p := mux.matchRoute(pattern); h != nil && p == pattern {
+		panic("mux: duplicate path for `" + pattern + "`")
 	}
 
 	mux.routes = append(mux.routes, &route{
@@ -65,7 +65,7 @@ func (mux *Mux) matchRoute(path string) (h http.Handler, pattern string) {
 			return r.handler, r.pattern
 		}
 	}
-	return
+	return nil, ""
 }
 
 func matchPath(pattern, path string) bool {
